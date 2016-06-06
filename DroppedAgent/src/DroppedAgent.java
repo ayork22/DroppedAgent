@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 public class DroppedAgent {
 
 	public static void main(String[] args) {
-		
+
 		String line;
 		String emHost = GetProperties.getPropertyValue("EnterpriseManager_Hostname");
 		String emPort = GetProperties.getPropertyValue("EnterpriseManager_Port");
@@ -13,10 +13,10 @@ public class DroppedAgent {
 		String clwLocation = GetProperties.getPropertyValue("CLW_JAR_Location");
 		String clwCommand = GetProperties.getPropertyValue("CLW_Command");
 		String javaLocation = GetProperties.getPropertyValue("JavaLocation");
-		String Agent = GetProperties.getPropertyValue("Agent");
-		
-		
-		System.out.println("test Property = " + GetProperties.getPropertyValue("EnterpriseManagerUserName"));
+		String agent = GetProperties.getPropertyValue("Agent");
+		String email = GetProperties.getPropertyValue("Agent");
+		String smptServer = GetProperties.getPropertyValue("Agent");
+
 		try {
 			// Template for using File
 			// File file = new File("/tmp/AgentList.txt");
@@ -25,14 +25,17 @@ public class DroppedAgent {
 			// file.createNewFile();
 			// }
 
-			
-//			Process p = Runtime.getRuntime().exec(
-//					"java -Duser=admin -Dhost=192.168.99.100 -jar /Users/yoral01/DevStuff/CLWorkstation.jar list agents matching .*");
+			// Process p = Runtime.getRuntime().exec(
+			// "java -Duser=admin -Dhost=192.168.99.100 -jar
+			// /Users/yoral01/DevStuff/CLWorkstation.jar list agents matching
+			// .*");
 
-			Process p = Runtime.getRuntime().exec(javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " " + clwCommand);
-			
-			String test = javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " " + clwCommand;
-			System.out.println("test =" + test);
+			Process p = Runtime.getRuntime().exec(
+					javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " " + clwCommand);
+
+			String command = javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " "
+					+ clwCommand;
+			System.out.println("CLW Command = " + command);
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
 			// Create String Builder to handle in memory
@@ -58,17 +61,17 @@ public class DroppedAgent {
 			}
 			// Print FINAL String of all Agents
 			String result = sb.toString();
-			System.out.println("Agent List = " + result);
+			System.out.println("Agent List" + "\n" + result);
 			// Close connections
 			// bw.close();
 			input.close();
 
 			// System.out.println("Find Docker = " + result.contains("WAS
 			// Liberty Docker"));
-			if (result.contains(Agent)) {
-				System.out.println("Agent is Connected");
+			if (result.contains(agent)) {
+				System.out.println(agent + " is Connected");
 			} else {
-				System.out.println("Agent is DisConnected");
+				System.out.println("Agent is Disonnected");
 				SendEmail.sendemail();
 			}
 		} catch (Exception err) {
