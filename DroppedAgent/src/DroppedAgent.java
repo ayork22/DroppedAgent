@@ -1,7 +1,4 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 
 public class DroppedAgent {
@@ -9,15 +6,17 @@ public class DroppedAgent {
 	public static void main(String[] args) {
 		
 		String line;
-		String clwLocation = "/Users/yoral01/DevStuff/CLWorkstation.jar";
-		String emHost = "192.168.99.100";
-		String emPort;
-		String user = "admin";
-		String pass;
-		String clwCommand = "list agents matching .*";
-		String javaLocation = "java";
-		String Agent = "WAS Liberty Docker1";
+		String emHost = GetProperties.getPropertyValue("EnterpriseManager_Hostname");
+		String emPort = GetProperties.getPropertyValue("EnterpriseManager_Port");
+		String user = GetProperties.getPropertyValue("EnterpriseManager_UserName");
+		String pass = GetProperties.getPropertyValue("EnterpriseManager_Password");
+		String clwLocation = GetProperties.getPropertyValue("CLW_JAR_Location");
+		String clwCommand = GetProperties.getPropertyValue("CLW_Command");
+		String javaLocation = GetProperties.getPropertyValue("JavaLocation");
+		String Agent = GetProperties.getPropertyValue("Agent");
 		
+		
+		System.out.println("test Property = " + GetProperties.getPropertyValue("EnterpriseManagerUserName"));
 		try {
 			// Template for using File
 			// File file = new File("/tmp/AgentList.txt");
@@ -54,7 +53,7 @@ public class DroppedAgent {
 
 				sb.append(line);
 				// Adds line if desired
-				// sb.append(System.getProperty("line.separator"));
+				sb.append(System.getProperty("line.separator"));
 
 			}
 			// Print FINAL String of all Agents
