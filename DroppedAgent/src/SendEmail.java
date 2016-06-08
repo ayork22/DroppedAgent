@@ -14,7 +14,7 @@ public class SendEmail {
 
 		// Recipient's email ID needs to be mentioned.
 		// String to = "alex.test@gmail.com";
-		String emailTo = GetProperties.getPropertyValue("Email_To");
+		// String emailTo = GetProperties.getPropertyValue("Email_To");
 		// Sender's email ID needs to be mentioned
 		// String from = "IntrsoscopeMonitor@ssa.gov";
 		String emailFrom = GetProperties.getPropertyValue("Email_From");
@@ -49,8 +49,12 @@ public class SendEmail {
 			message.setSubject("Dropped Agent Notificaiton");
 
 			// Send the actual HTML message, as big as you like
-			message.setContent("<h1>Web URL Monitor Agent has disconnected</h1>", "text/html");
-
+			//Working Example
+			message.setContent("<h1>WebURL Agent is Disconnected</h1>", "text/html");
+//			message.setContent
+//	          ("<h1>The following Agents have been disconnected.  Click link below \n </h1>" + "<a href=http://s029aae.ba.ad.ssa.gov:9080</a>", "text/html");
+//			
+			
 			// Send message
 			Transport.send(message);
 			System.out.println("Sent message successfully....");

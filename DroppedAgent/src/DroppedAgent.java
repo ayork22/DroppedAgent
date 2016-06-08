@@ -14,9 +14,8 @@ public class DroppedAgent {
 		String clwCommand = GetProperties.getPropertyValue("CLW_Command");
 		String javaLocation = GetProperties.getPropertyValue("JavaLocation");
 		String agent = GetProperties.getPropertyValue("Agent");
-		String email = GetProperties.getPropertyValue("Agent");
-		String smptServer = GetProperties.getPropertyValue("Agent");
 
+		String[] agents = agent.split(",");
 		try {
 			// Template for using File
 			// File file = new File("/tmp/AgentList.txt");
@@ -30,11 +29,12 @@ public class DroppedAgent {
 			// /Users/yoral01/DevStuff/CLWorkstation.jar list agents matching
 			// .*");
 
-			Process p = Runtime.getRuntime().exec(
-					javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " " + clwCommand);
+			Process p = Runtime.getRuntime().exec(javaLocation + " -Duser=" + user + " -Dpassword=" + pass + " -Dhost="
+					+ emHost + " -Dport=" + emPort + " -jar " + clwLocation + " " + clwCommand);
 
-			String command = javaLocation + " -Duser=" + user + " -Dhost=" + emHost + " -jar " + clwLocation + " "
-					+ clwCommand;
+			String command = javaLocation + " -Duser=" + user + " -Dpassword=" + pass + " -Dhost=" + emHost + " -Dport="
+					+ emPort + " -jar " + clwLocation + " " + clwCommand;
+
 			System.out.println("CLW Command = " + command);
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -68,11 +68,17 @@ public class DroppedAgent {
 
 			// System.out.println("Find Docker = " + result.contains("WAS
 			// Liberty Docker"));
-			if (result.contains(agent)) {
-				System.out.println(agent + " is Connected");
-			} else {
-				System.out.println("Agent is Disonnected");
-				SendEmail.sendemail();
+
+			// Test AREA******
+
+			for (String agentName : agents) {
+
+				if (result.contains(agentName)) {
+					System.out.println(agentName + " is Connected");
+				} else {
+					System.out.println(agentName + " is Disonnected");
+					SendEmail.sendemail();
+				}
 			}
 		} catch (Exception err) {
 			err.printStackTrace();
