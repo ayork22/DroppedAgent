@@ -40,6 +40,7 @@ public class DroppedAgent {
 
 			// Create String Builder to handle in memory
 			StringBuilder sb = new StringBuilder();
+			StringBuilder sbEmail = new StringBuilder();
 
 			// Use FileWriter if want to write CLW output to file
 			// FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -60,8 +61,8 @@ public class DroppedAgent {
 
 			}
 			// Print FINAL String of all Agents
-			String result = sb.toString();
-			System.out.println("Agent List" + "\n" + result);
+			String agentList = sb.toString();
+			System.out.println("Agent List" + "\n" + agentList);
 			// Close connections
 			// bw.close();
 			input.close();
@@ -69,17 +70,24 @@ public class DroppedAgent {
 			// System.out.println("Find Docker = " + result.contains("WAS
 			// Liberty Docker"));
 
-			// Test AREA******
-
 			for (String agentName : agents) {
 
-				if (result.contains(agentName)) {
+				if (agentList.contains(agentName)) {
 					System.out.println(agentName + " is Connected");
 				} else {
 					System.out.println(agentName + " is Disonnected");
-					SendEmail.sendemail();
+					sbEmail.append(agentName);
+					sbEmail.append(System.getProperty("line.separator"));
+
+					// SendEmail.sendemail();
 				}
+
 			}
+			String droppedAgents = sbEmail.toString();
+			System.out.println("************Disconnected Agents************" + "\n" + droppedAgents);
+
+			SendEmail.sendemail(droppedAgents);
+
 		} catch (Exception err) {
 			err.printStackTrace();
 		}

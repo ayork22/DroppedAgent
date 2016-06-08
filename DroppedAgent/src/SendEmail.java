@@ -4,7 +4,7 @@ import javax.mail.internet.*;
 
 public class SendEmail {
 
-	public static void sendemail() {
+	public static void sendemail(String disconnectedAgents) {
 
 		// TEST AREA ********
 		// Address[] cc = new Address[] {InternetAddress.parse("abc@abc.com"),
@@ -50,7 +50,7 @@ public class SendEmail {
 
 			// Send the actual HTML message, as big as you like
 			//Working Example
-			message.setContent("<h1>WebURL Agent is Disconnected</h1>", "text/html");
+			message.setContent("<h1>The Below Agents are Not Connected to APM</h1>" + "\n" + disconnectedAgents, "text/html");
 //			message.setContent
 //	          ("<h1>The following Agents have been disconnected.  Click link below \n </h1>" + "<a href=http://s029aae.ba.ad.ssa.gov:9080</a>", "text/html");
 //			
